@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>mn-belajarweb.blogspot.com</title>
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link rel="shortcut icon" href="foto/favicon.png" />
+
+    <style>
+        #animated-background {
+            animation: bgfade 100s infinite;
+            background-size: 100%;
+            background-color: #000;
+
+            background-repeat: no-repeat;
+        }
+
+        /****** add a background overlay *******/
+        #animated-background:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: black;
+            opacity: 0.3;
+        }
+    </style>
+    <style id="animasi">
+        @keyframes bgfade {
+            0% {
+                background-image: url(foto/a.jpg);
+            }
+
+            20% {
+                background-image: url(foto/b.jpg);
+            }
+
+            40% {
+                background-image: url(foto/c.jpg);
+            }
+
+            60% {
+                background-image: url(foto/d.jpg);
+            }
+
+            80% {
+                background-image: url(foto/e.jpg);
+            }
+
+            100% {
+                background-image: url(foto/a.jpg);
+            }
+        }
+    </style>
+</head>
+
+<body id="animated-background">
+    <div class="modal fade" id="pilihFile" tabindex="-1" role="dialog" aria-labelledby="portfolioModal1Label"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <p>Selamat datang di penampil slide foto/diskon toko.<br />silahkan pilih gambar yang ada di folder
+                        'foto' aplikasi ini. <br /> jika tidak ada, silahkan pindah dulu secara manual ke folder 'foto'
+                        dulu ya.<br />pilih maksimal 5 saja ya. <br />pastikan nama gambar tidak ada karakter yang aneh.
+                        <br />setiap di aplikasi di refresh/dibuka ulang, maka kalian harus memilih ulang gambar yang
+                        ingin ditampilkan. enjoy :)
+                    </p>
+                    <input type="file" id="fileFoto" accept=".jpg, .png, .jpeg" multiple />
+                </div>
+                <button class="btn btn-info" type="button" data-dismiss="modal" aria-label="Close">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script>
+        $("#pilihFile").modal("show")
+
+        var pilihMusik = $("#fileFoto").change(function () {
+            var dataStyle = ["@keyframes bgfade {0% {background-image: url(", ");}20% {background-image: url(", ");}40% {background-image: url(", ");}60% {background-image: url(", ");}80% {background-image: url(", ");}100% {background-image: url(", ");}}"];
+            var hasil = '';
+
+            var data = $("#fileFoto").get(0).files;
+            var indeks = 0;
+            if (data) {
+                for (let j = 0; j < 5; j++) {
+                    if (indeks < data.length) {
+                        hasil += dataStyle[j] + "foto/" + data[indeks].name.split(" ").join("%20")
+                        indeks++;
+                    } else {
+                        if (data.length > 1) {
+                            indeks = 1;
+                        } else {
+                            indeks = 0;
+                        }
+                        j--;
+                    }
+                }
+                hasil += dataStyle[5] + "foto/" + data[0].name.split(" ").join("%20") + dataStyle[6]
+            }
+            $("#animasi").html(hasil);
+        })
+    </script>
+</body>
